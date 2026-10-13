@@ -20,6 +20,8 @@ const P = {
   kart: '<circle cx="12" cy="34" r="6"/><circle cx="37" cy="34" r="6"/><path d="M18 34h13M4 28h10l6-8h10l4 8h10"/><path d="M24 20l2-8h5"/><path d="M38 12l4-6M42 16l4-4"/>',
   billiard: '<circle cx="18" cy="30" r="12"/><circle cx="18" cy="30" r="5"/><path d="M15.5 28.5l3 0M18 27v6"/><path d="M28 20L44 4"/><circle cx="36" cy="38" r="5"/>',
   cinema: '<rect x="5" y="16" width="38" height="26" rx="2"/><path d="M5 16l4-9 34 9M15 9l-2 7M25 11.5l-2 7.5M35 14l-1 3"/><path d="M20 24v11l10-5.5z"/>',
+  jar: '<path d="M15 12h18v-5H15z"/><path d="M13 12h22l2 6v20a5 5 0 01-5 5H16a5 5 0 01-5-5V18z"/><path d="M11 24h26"/><path d="M17 31h14M20 36h8"/>',
+  owl: '<path d="M10 8l6 5h16l6-5v18c0 9-6 16-14 16S10 35 10 26z"/><circle cx="18" cy="21" r="4.5"/><circle cx="30" cy="21" r="4.5"/><path d="M22 28l2 3 2-3"/><path d="M17 36l3-3M31 36l-3-3"/>',
   lock: '<rect x="10" y="21" width="28" height="22" rx="3"/><path d="M16 21v-6a8 8 0 0116 0v6"/><circle cx="24" cy="31" r="2.5"/><path d="M24 33.5V37"/>',
 };
 

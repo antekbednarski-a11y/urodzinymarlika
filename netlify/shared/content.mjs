@@ -8,19 +8,20 @@
 //   kicker   – mały nagłówek nad tytułem
 //   title    – tytuł
 //   text     – treść (pusta linia = nowy akapit)
-//   photo    – nazwa pliku w public/img (bez .jpg); brak pliku = ilustracja z ikoną
+//   photo    – folder w public/img; wszystkie zdjęcia z folderu tworzą galerię.
+//              Pusty folder = ludowa rozeta z ikoną.
 //   icon     – ikona ilustracji (lista w public/js/icons.js)
 //   timeline – [{ time, title, text, icon }]
-//   gift     – true = slajd z miejscem ukrycia prezentu
+//   gift     – styl karteczki z miejscem ukrycia prezentu: 'larder' | 'hogwarts' | 'main'
 
 export const VARS = [
   { key: 'myBirthday', label: 'Wspomnienie z moich urodzin (rozdz. „Moja kolej”)', type: 'textarea',
     default: 'Na moje urodziny sprawiłaś, że czułem się najważniejszym człowiekiem na świecie. Pamiętam każdy prezent, każdy uśmiech i to, ile serca w to włożyłaś.' },
-  { key: 'giftPlace1', label: 'Gdzie jest prezent nr 1', type: 'textarea',
+  { key: 'giftPlace1', label: 'Gdzie jest prezent nr 1 (polskie specjały)', type: 'textarea',
     default: 'Zajrzyj tam, gdzie zawsze zostawiasz swój płaszcz.' },
-  { key: 'giftPlace2', label: 'Gdzie jest prezent nr 2', type: 'textarea',
-    default: 'Poszukaj w miejscu, w którym zasypiamy.' },
-  { key: 'giftPlace3', label: 'Gdzie jest prezent nr 3', type: 'textarea',
+  { key: 'giftPlace2', label: 'Gdzie jest prezent nr 2 (list z Hogwartu)', type: 'textarea',
+    default: 'Pod schodami? Nie tym razem. Zajrzyj tam, gdzie zasypiamy.' },
+  { key: 'giftPlace3', label: 'Gdzie jest prezent nr 3 — główny', type: 'textarea',
     default: 'Tam, gdzie trzymamy herbatę.' },
   { key: 'activity', label: 'Wybrana aktywność', type: 'select',
     options: ['Gokarty', 'Bilard', 'Kino'], default: 'Gokarty' },
@@ -78,7 +79,7 @@ export const CHAPTERS = [
       {
         kicker: 'Prezent pierwszy',
         title: 'Pamiętasz moje urodziny?',
-        photo: 'moje-urodziny',
+        photo: '01-moje-urodziny',
         icon: 'candle',
         text: '{{myBirthday}}',
       },
@@ -90,8 +91,14 @@ export const CHAPTERS = [
       },
       {
         kicker: 'Prezent pierwszy',
-        title: 'Twój prezent czeka',
-        gift: true,
+        title: 'Prosto z polskiej spiżarni',
+        icon: 'jar',
+        text: 'Skoro dziś wszystko jest po polsku, to i pierwszy prezent pachnie domem.\n\nOstrzegam: może zniknąć szybciej niż pierogi u babci.',
+      },
+      {
+        kicker: 'Prezent pierwszy',
+        title: 'Smacznego, Marlenko!',
+        gift: 'larder',
         text: '{{giftPlace1}}',
       },
     ],
@@ -105,49 +112,55 @@ export const CHAPTERS = [
       {
         kicker: 'Luty',
         title: 'Poznaliśmy się',
-        photo: 'luty',
+        photo: '02-luty-poznanie',
         icon: 'heartpin',
         text: 'Koniec lutego. Jeszcze nie wiedziałem, że zaczyna się najlepszy rok.',
       },
       {
         kicker: 'Wrocław',
         title: 'Półmaraton',
-        photo: 'wroclaw',
+        photo: '03-wroclaw-polmaraton',
         icon: 'runner',
         text: '21,0975 km. Ty biegłaś, ja kibicowałem — i byłem z Ciebie dumny jak nigdy.',
       },
       {
         kicker: 'Mazury',
         title: 'Jeziora, grzyby i pick-up',
-        photo: 'mazury',
+        photo: '04-mazury',
         icon: 'jeep',
         text: 'Weekend u znajomych, leśne drogi terenówką i pierwsze wspólne grzybobranie.',
       },
       {
         kicker: 'Terespol',
         title: 'Na samym wschodzie',
-        photo: 'terespol',
+        photo: '05-terespol',
         icon: 'cottage',
         text: 'Dwa razy u Twoich rodziców. Podlaskie niebo, drewniane chaty i jedzenie, którego się nie zapomina.',
       },
       {
         kicker: 'Sycylia',
         title: 'Ty na desce',
-        photo: 'sycylia',
+        photo: '06-sycylia',
         icon: 'kite',
         text: 'Słońce, wiatr i Twoje pierwsze kroki w kitesurfingu. Wywrotki też się liczą 😄',
       },
       {
         kicker: 'Orle',
         title: 'Pałac myśliwski',
-        photo: 'orle',
+        photo: '07-orle-palac',
         icon: 'palace',
         text: 'Pomorze Zachodnie, mgła nad lasem, pałac tylko dla nas i pełne kosze grzybów.',
       },
       {
         kicker: 'Prezent drugi',
         title: 'Za ten rok — dziękuję',
-        gift: true,
+        icon: 'heart',
+        text: 'Za każdy kilometr, każdą wyprawę i każdy wieczór.\n\nA teraz… sprawdź, czy nie przyleciała do Ciebie sowa.',
+      },
+      {
+        kicker: 'Sowia poczta',
+        title: 'List z Hogwartu',
+        gift: 'hogwarts',
         text: '{{giftPlace2}}',
       },
     ],
@@ -155,27 +168,33 @@ export const CHAPTERS = [
   {
     id: 'gift3',
     title: 'Złota polska jesień',
-    subtitle: 'Prezent trzeci',
+    subtitle: 'Prezent główny',
     icon: 'mushroom',
     slides: [
       {
         kicker: 'Jesieniara',
         title: 'Twój sezon, Marlik',
-        photo: 'jesien',
+        photo: '08-jesien',
         icon: 'cup',
         text: 'Swetry, herbata z sokiem malinowym, liście pod butami i świece wieczorem.\n\nJesień jest najpiękniejsza, odkąd mam ją z Tobą.',
       },
       {
         kicker: 'Grzybobranie',
         title: 'Królowa lasu',
-        photo: 'grzyby',
+        photo: '09-grzyby',
         icon: 'mushroom',
         text: 'Prawdziwki, podgrzybki, kanie… Jesteś najlepszą grzybiarką, jaką znam.',
       },
       {
-        kicker: 'Prezent trzeci',
-        title: 'Coś na jesienne wieczory',
-        gift: true,
+        kicker: 'Prezent główny',
+        title: 'Brakuje jeszcze jednego dodatku…',
+        icon: 'star',
+        text: 'Każda jesieniara wie, że stylizacja to nie tylko płaszcz i szalik.\n\nTo coś pójdzie z Tobą na każdy jesienny spacer, na grzyby i na aperol we Włoszech.',
+      },
+      {
+        kicker: 'Prezent główny',
+        title: 'Ten najważniejszy',
+        gift: 'main',
         text: '{{giftPlace3}}',
       },
     ],
@@ -210,7 +229,7 @@ export const CHAPTERS = [
       {
         kicker: 'Kolacja',
         title: '{{restaurant}}',
-        photo: 'restauracja',
+        photo: '10-restauracja',
         icon: 'plate',
         text: '{{dinnerDetails}}',
       },
@@ -237,21 +256,21 @@ export const CHAPTERS = [
       {
         kicker: 'Sylwester',
         title: 'Włoskie Alpy',
-        photo: 'wlochy',
+        photo: '11-wlochy-narty',
         icon: 'ski',
         text: 'Narty w słońcu, après-ski, aperol i vin brulé. Nowy rok witamy w górach — razem.',
       },
       {
         kicker: 'Kwiecień',
         title: 'Namibia',
-        photo: 'namibia',
+        photo: '12-namibia',
         icon: 'jeep',
         text: 'Terenówką przez czerwone wydmy, safari, a nocą niebo pełne gwiazd. Nie mogę się doczekać.',
       },
       {
         kicker: 'Lato',
         title: 'Powrót na Sycylię',
-        photo: 'sycylia-2',
+        photo: '13-sycylia-powrot',
         icon: 'kite',
         text: 'Wracamy nad morze, a Ty wracasz na deskę. Może tym razem to Ty nauczysz mnie kajta?',
       },

@@ -8,28 +8,33 @@ Jesienno-ludowa strona na urodziny: PIN → formularz nastroju → panel organiz
 
 ## Zdjęcia
 
-Wrzuć do `public/img/` pliki o tych nazwach (`.jpg`, `.jpeg`, `.png` lub `.webp`). Brak pliku = ludowa rozeta z ikoną.
+Każde wydarzenie ma swój folder w `public/img/`. Wrzucaj zdjęcia z dowolnymi nazwami (`.jpg`, `.png`, `.webp`) —
+wszystkie z folderu pokażą się jako przesuwana galeria polaroidów (kolejność alfabetyczna).
+Pusty folder = ludowa rozeta z ikoną. Po wrzuceniu Netlify sam przebuduje stronę (~1 min).
 
-| Plik | Gdzie się pokaże |
+| Folder | Slajd |
 |---|---|
-| `moje-urodziny` | Prezent 1 – „Pamiętasz moje urodziny?” |
-| `luty` | Nasz rok – poznanie |
-| `wroclaw` | Nasz rok – półmaraton |
-| `mazury` | Nasz rok – Mazury, pick-up |
-| `terespol` | Nasz rok – Terespol |
-| `sycylia` | Nasz rok – kitesurfing |
-| `orle` | Nasz rok – pałac myśliwski |
-| `jesien` | Prezent 3 – jesieniara |
-| `grzyby` | Prezent 3 – grzybobranie |
-| `restauracja` | Kolacja |
-| `wlochy` | Kolejny rok – narty we Włoszech |
-| `namibia` | Kolejny rok – Namibia |
-| `sycylia-2` | Kolejny rok – powrót na Sycylię |
+| `01-moje-urodziny` | Prezent 1 – „Pamiętasz moje urodziny?” |
+| `02-luty-poznanie` | Nasz rok – poznanie |
+| `03-wroclaw-polmaraton` | Nasz rok – półmaraton |
+| `04-mazury` | Nasz rok – Mazury, pick-up |
+| `05-terespol` | Nasz rok – Terespol |
+| `06-sycylia` | Nasz rok – kitesurfing |
+| `07-orle-palac` | Nasz rok – pałac myśliwski |
+| `08-jesien` | Prezent główny – jesieniara |
+| `09-grzyby` | Prezent główny – grzybobranie |
+| `10-restauracja` | Kolacja |
+| `11-wlochy-narty` | Kolejny rok – narty we Włoszech |
+| `12-namibia` | Kolejny rok – Namibia |
+| `13-sycylia-powrot` | Kolejny rok – powrót na Sycylię |
+
+Wrzucanie przez GitHub: wejdź w folder → **Add file → Upload files** → przeciągnij zdjęcia → **Commit changes**
+(na gałęzi, z której wdraża Netlify).
 
 ## Wdrożenie na Netlify
 
 1. Netlify → **Add new site → Import an existing project → GitHub** → to repo.
-2. Branch: ten z kodem, build command: puste, publish directory: `public` (wczyta się z `netlify.toml`).
+2. Branch: ten z kodem. Build command i publish directory wczytają się z `netlify.toml`.
 3. **Deploy**. Netlify Blobs działa bez konfiguracji.
 
 ## Lokalnie

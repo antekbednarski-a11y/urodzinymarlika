@@ -4,6 +4,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import './build-manifest.mjs';
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 process.env.LOCAL_STORE_FILE ||= path.join(root, '.local-state.json');
 const { default: api } = await import('../netlify/functions/api.mjs');
@@ -24,7 +26,7 @@ http.createServer(async (req, res) => {
   }
   // Netlify Image CDN nie działa lokalnie — podajemy oryginał.
   const p = url.pathname === '/.netlify/images' ? url.searchParams.get('url') : url.pathname;
-  const file = path.join(root, 'public', p === '/' ? 'index.html' : p);
+  const file = path.join(root, 'public', p === '/' ? 'index.html' : decodeURIComponent(p));
   try {
     const data = await fs.readFile(file);
     res.writeHead(200, { 'content-type': TYPES[path.extname(file)] || 'application/octet-stream' });

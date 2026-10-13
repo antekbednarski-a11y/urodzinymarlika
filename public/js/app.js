@@ -311,29 +311,73 @@ function renderHome(data, justSent = false) {
 }
 
 // ——— Przeglądarka slajdów ———
-const PHOTO_EXT = ['jpg', 'jpeg', 'png', 'webp'];
-function photoUrl(name, ext) {
-  const src = `/img/${name}.${ext}`;
+// Spis zdjęć z public/img/<folder>/ (generowany przy wdrożeniu).
+let PHOTOS = {};
+fetch('/img/manifest.json').then(r => r.json()).then(m => { PHOTOS = m; }).catch(() => {});
+
+function photoUrl(folder, file) {
+  const src = `/img/${folder}/${encodeURIComponent(file)}`;
   return location.hostname === 'localhost' ? src : `/.netlify/images?url=${encodeURIComponent(src)}&w=900&q=80`;
 }
 
 function media(s) {
-  const fallback = rosette(210, icon(s.gift ? 'gift' : s.icon || 'leaf'));
-  if (!s.photo) return fallback;
-  return `<div class="photo-frame" data-photo="${esc(s.photo)}" data-try="0">
-    <img alt="" src="${photoUrl(s.photo, PHOTO_EXT[0])}"></div><template>${fallback}</template>`;
+  const fallback = rosette(210, icon(s.icon || 'leaf'));
+  const files = (s.photo && PHOTOS[s.photo]) || [];
+  if (!files.length) return fallback;
+  const tilt = [-2, 1.5, -1, 2, -1.5];
+  return `<div class="gallery ${files.length === 1 ? 'single' : ''}">
+      <div class="g-track">${files.map((f, k) => `
+        <figure class="photo-frame" style="--tilt:${tilt[k % tilt.length]}deg">
+          <img alt="" loading="${k < 2 ? 'eager' : 'lazy'}" src="${photoUrl(s.photo, f)}">
+        </figure>`).join('')}
+      </div>
+      ${files.length > 1 ? `<div class="g-count"><span>1</span> / ${files.length} · przesuń ↔</div>` : ''}
+    </div><template>${fallback}</template>`;
 }
 
 function wirePhotos(root) {
-  root.querySelectorAll('.photo-frame').forEach(f => {
-    const img = f.querySelector('img');
-    img.onerror = () => {
-      const i = Number(f.dataset.try) + 1;
-      if (i < PHOTO_EXT.length) { f.dataset.try = i; img.src = photoUrl(f.dataset.photo, PHOTO_EXT[i]); }
-      else f.replaceWith(f.nextElementSibling.content.cloneNode(true));
-    };
+  root.querySelectorAll('.gallery').forEach(g => {
+    const track = g.querySelector('.g-track');
+    g.querySelectorAll('img').forEach(img => img.onerror = () => {
+      img.closest('figure').remove();
+      if (!track.children.length) g.replaceWith(g.nextElementSibling.content.cloneNode(true));
+    });
+    const count = g.querySelector('.g-count span');
+    if (count) track.addEventListener('scroll', () => {
+      count.textContent = Math.round(track.scrollLeft / track.firstElementChild.offsetWidth) + 1;
+    }, { passive: true });
   });
 }
+
+const GIFT_NOTES = {
+  larder: s => `
+    ${rosette(170, icon('jar'))}
+    <div class="kicker">${esc(s.kicker)}</div><h2>${esc(s.title)}</h2>
+    <div class="gift-note larder">
+      <div class="label">Gdzie szukać</div>
+      <div class="where">${esc(s.text).replace(/\n/g, '<br>')}</div>
+    </div>
+    <p class="hand">Idź, rozpakuj i wróć do mnie 🎁</p>`,
+  hogwarts: s => `
+    <div class="kicker">${esc(s.kicker)}</div><h2 class="fell">${esc(s.title)}</h2>
+    <div class="letter">
+      <div class="crest">Hogwart · Szkoła Magii i Czarodziejstwa</div>
+      <p class="fell">Szanowna Panno Marleno,</p>
+      <p class="fell">z przyjemnością informujemy, że z okazji urodzin czeka na Panią magiczna przesyłka. Sowa zostawiła ją w miejscu wskazanym poniżej:</p>
+      <div class="where">${esc(s.text).replace(/\n/g, '<br>')}</div>
+      <p class="fell">Hasło otwierające: <i>Alohomora!</i></p>
+      <p class="fell sign">Z wyrazami szacunku,<br>Sowia Poczta ${icon('owl')}</p>
+      <div class="seal">M</div>
+    </div>`,
+  main: s => `
+    ${rosette(200, icon('star'))}
+    <div class="kicker">${esc(s.kicker)}</div><h2>${esc(s.title)}</h2>
+    <div class="gift-note main">
+      <div class="label">Gdzie szukać</div>
+      <div class="where">${esc(s.text).replace(/\n/g, '<br>')}</div>
+    </div>
+    <p class="hand">Ten jest wyjątkowy ✨</p>`,
+};
 
 function slideHtml(s) {
   if (s.timeline) {
@@ -344,13 +388,7 @@ function slideHtml(s) {
         <div><div class="time">${esc(t.time)}</div><b>${esc(t.title)}</b><p>${esc(t.text)}</p></div></li>`).join('')}
       </ul>`;
   }
-  if (s.gift) {
-    return `
-      ${rosette(190, icon('gift'))}
-      <div class="kicker">${esc(s.kicker)}</div><h2>${esc(s.title)}</h2>
-      <div class="gift-note"><div class="label">Gdzie szukać</div><div class="where">${esc(s.text).replace(/\n/g, '<br>')}</div></div>
-      <p class="hand" style="margin-top:6px">Idź, rozpakuj i wróć do mnie 🎁</p>`;
-  }
+  if (s.gift) return (GIFT_NOTES[s.gift] || GIFT_NOTES.larder)(s);
   return `
     ${media(s)}
     <div><div class="kicker">${esc(s.kicker)}</div><h2>${esc(s.title)}</h2></div>
@@ -396,7 +434,7 @@ function openViewer(ch) {
 
   // Przesuwanie palcem
   let x0 = null;
-  v.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  v.addEventListener('touchstart', e => { x0 = e.target.closest('.gallery') ? null : e.touches[0].clientX; }, { passive: true });
   v.addEventListener('touchend', e => {
     if (x0 == null) return;
     const dx = e.changedTouches[0].clientX - x0;
