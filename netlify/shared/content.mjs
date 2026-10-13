@@ -276,7 +276,7 @@ export const CHAPTERS = [
         title: 'Powrót na Sycylię',
         photo: '13-sycylia-powrot',
         icon: 'kite',
-        text: 'Wracamy nad morze, a Ty wracasz na deskę. Może tym razem to Ty nauczysz mnie kajta?',
+        text: 'Wracamy do Cefalù — na nasze plaże, uliczki i zachody słońca. Tym razem zajrzymy też do barokowego Noto, a w Trapani wpadniemy do Krzysia i Kate.\n\nI oczywiście — Ty wracasz na deskę.',
       },
       {
         kicker: 'I wszystko inne',
