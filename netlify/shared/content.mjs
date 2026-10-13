@@ -134,10 +134,10 @@ export const CHAPTERS = [
       },
       {
         kicker: 'Terespol',
-        title: 'Na samym wschodzie',
+        title: 'Bunkrów nie ma, ale też jest zajebiście',
         photo: '05-terespol',
         icon: 'cottage',
-        text: 'Dwa razy u Twoich rodziców. Podlaskie niebo, drewniane chaty i jedzenie, którego się nie zapomina.',
+        text: 'Dwa razy u Twoich rodziców, na samym wschodzie. Bunkrów faktycznie nie było — za to były forty! Ceglane mury, porośnięte wały i łażenie po zakamarkach starej twierdzy.\n\nA wieczorem jedzenie Twojej mamy, którego się nie zapomina.',
       },
       {
         kicker: 'Sycylia',
