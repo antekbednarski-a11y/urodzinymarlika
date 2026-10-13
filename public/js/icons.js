@@ -22,6 +22,9 @@ const P = {
   cinema: '<rect x="5" y="16" width="38" height="26" rx="2"/><path d="M5 16l4-9 34 9M15 9l-2 7M25 11.5l-2 7.5M35 14l-1 3"/><path d="M20 24v11l10-5.5z"/>',
   jar: '<path d="M15 12h18v-5H15z"/><path d="M13 12h22l2 6v20a5 5 0 01-5 5H16a5 5 0 01-5-5V18z"/><path d="M11 24h26"/><path d="M17 31h14M20 36h8"/>',
   owl: '<path d="M10 8l6 5h16l6-5v18c0 9-6 16-14 16S10 35 10 26z"/><circle cx="18" cy="21" r="4.5"/><circle cx="30" cy="21" r="4.5"/><path d="M22 28l2 3 2-3"/><path d="M17 36l3-3M31 36l-3-3"/>',
+  sweater: '<path d="M17 6c2 3 12 3 14 0l9 5 4 13-6 2-2-6v22H12V20l-2 6-6-2 4-13z"/><path d="M17 6c1 5 13 5 14 0"/><path d="M12 30h24M12 35h24"/><path d="M18 30l2 5M24 30l2 5M30 30l2 5"/>',
+  pumpkin: '<path d="M24 12c-3-5 0-8 4-8"/><ellipse cx="24" cy="28" rx="7" ry="14"/><path d="M17 16C9 16 4 21 4 28s5 14 13 14M31 16c8 0 13 5 13 12s-5 14-13 14"/>',
+  book: '<path d="M24 12c-5-4-12-5-19-4v30c7-1 14 0 19 4 5-4 12-5 19-4V8c-7-1-14 0-19 4z"/><path d="M24 12v30"/><path d="M10 16c3 0 6 1 9 2M10 22c3 0 6 1 9 2M29 18c3-1 6-2 9-2"/>',
   lock: '<rect x="10" y="21" width="28" height="22" rx="3"/><path d="M16 21v-6a8 8 0 0116 0v6"/><circle cx="24" cy="31" r="2.5"/><path d="M24 33.5V37"/>',
 };
 

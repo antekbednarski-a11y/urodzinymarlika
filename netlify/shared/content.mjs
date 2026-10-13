@@ -12,6 +12,8 @@
 //              Pusty folder = ludowa rozeta z ikoną.
 //   icon     – ikona ilustracji (lista w public/js/icons.js)
 //   timeline – [{ time, title, text, icon }]
+//   mushrooms – kosz obracających się grzybów (sprite z Grzybaby), gdy folder jest pusty
+//   moodboard – jesienny moodboard z ilustracji, gdy folder jest pusty
 //   gift     – styl karteczki z miejscem ukrycia prezentu: 'larder' | 'hogwarts' | 'main'
 
 export const VARS = [
@@ -175,6 +177,7 @@ export const CHAPTERS = [
         kicker: 'Jesieniara',
         title: 'Twój sezon, Marlik',
         photo: '08-jesien',
+        moodboard: true,
         icon: 'cup',
         text: 'Swetry, herbata z sokiem malinowym, liście pod butami i świece wieczorem.\n\nJesień jest najpiękniejsza, odkąd mam ją z Tobą.',
       },
@@ -182,6 +185,7 @@ export const CHAPTERS = [
         kicker: 'Grzybobranie',
         title: 'Królowa lasu',
         photo: '09-grzyby',
+        mushrooms: true,
         icon: 'mushroom',
         text: 'Prawdziwki, podgrzybki, kanie… Jesteś najlepszą grzybiarką, jaką znam.',
       },

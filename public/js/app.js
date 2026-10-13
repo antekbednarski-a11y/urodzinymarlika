@@ -320,8 +320,29 @@ function photoUrl(folder, file) {
   return location.hostname === 'localhost' ? src : `/.netlify/images?url=${encodeURIComponent(src)}&w=900&q=80`;
 }
 
+const MUSHROOMS = ['Borowik szlachetny', 'Podgrzybek brunatny', 'Kurka', 'Maślak zwyczajny', 'Maślak żółty', 'Rydz',
+  'Koźlarz babka', 'Koźlarz czerwony', 'Borowik ceglastopory', 'Kania', 'Opieńka'];
+const MOOD = [
+  ['sweater', 'Gruby sweter', 'var(--rust)'], ['cup', 'Herbata z malinami', 'var(--burgundy)'],
+  ['leaf', 'Szelest liści', 'var(--mustard)'], ['pumpkin', 'Dynie', 'var(--pumpkin)'],
+  ['candle', 'Świece wieczorem', 'var(--forest)'], ['book', 'Książka pod kocem', 'var(--olive)'],
+];
+
+// Kosz grzybów — obracające się pikselowe grzyby z Grzybaby.
+function basket() {
+  return `<div class="basket">${MUSHROOMS.map((n, k) => `
+    <div class="shroom" style="--d:${k * 0.13}s"><span class="gicon" style="--row:${k};animation-delay:calc(var(--d) * -1)"></span><small>${n}</small></div>`).join('')}
+  </div>`;
+}
+
+function moodboard() {
+  return `<div class="moodboard">${MOOD.map(([ic, label, c], k) => `
+    <div class="mood" style="--c:${c};--tilt:${[-3, 2, -1.5, 2.5, -2, 1.5][k]}deg">${icon(ic)}<small>${label}</small></div>`).join('')}
+  </div>`;
+}
+
 function media(s) {
-  const fallback = rosette(210, icon(s.icon || 'leaf'));
+  const fallback = s.mushrooms ? basket() : s.moodboard ? moodboard() : rosette(210, icon(s.icon || 'leaf'));
   const files = (s.photo && PHOTOS[s.photo]) || [];
   if (!files.length) return fallback;
   const tilt = [-2, 1.5, -1, 2, -1.5];
